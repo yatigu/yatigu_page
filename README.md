@@ -1,3 +1,15 @@
+프로젝트 클론후 오류 발생시 
+	rm -rf node_modules
+	npm install -g npm@latest
+	npm i core-util-is
+모듈을 다시 설치 하는 것을 추천
+
+또한 추가 기능이 필요한 경우
+	ex ) yarn add @material-ui/lab 등과 같이 필요한 부분 추가 설치
+
+
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
