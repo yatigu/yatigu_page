@@ -1,0 +1,12 @@
+.sel-box {
+    display: flex;
+    justify-content: center;
+}
+
+.top-margin {
+    margin-top: 15px;
+}
+
+.right-margin {
+    margin-right: 10px;
+}

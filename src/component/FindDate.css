@@ -1,0 +1,9 @@
+.date-wrapper {
+    display: flex;
+    justify-content: center;
+}
+
+.input-date {
+    width: 100px;
+    height: 20px;
+}

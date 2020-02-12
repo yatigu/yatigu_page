@@ -1,0 +1,9 @@
+.but-wrapper {
+    display: flex;
+    justify-content: center;
+}
+
+.res-but {
+    width: 100px;
+    height: 40px;
+}

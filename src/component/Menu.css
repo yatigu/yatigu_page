@@ -1,0 +1,59 @@
+.search-img {
+    width: 20px;
+    height: 20px;
+}
+
+.li-wrapper {
+    display: flex;
+}
+
+.menu-title {
+    display: flex;
+    justify-content: center;
+    font-weight: 900;
+    color : white;
+    background-color: blue;
+}
+
+.menu-leg {
+    position: relative;
+    right: 35px;
+}
+
+.menu-wrapper {
+    display: flex;
+    justify-content: center;
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+.menu-input {
+    width: 125px;
+    height: 20px;
+}
+
+.station-wrapper {
+    color: #373737;
+}
+
+.date-wrapper {
+    position: relative;
+    right: 35px;
+}
+
+.menu-input-date {
+    width: 125px;
+    height: 20px;
+}
+
+.time-wrapper{
+    position: relative;
+    right: 35px;
+}
+
+.menu-input-time {
+    position: relative;
+    left: 14px;
+    width: 125px;
+    height: 20px;
+}

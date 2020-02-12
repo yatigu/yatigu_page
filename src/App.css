@@ -1,0 +1,39 @@
+.App {
+  text-align: center;
+}
+
+.box-wrapper { 
+  align-items: center;
+  width: 50vw;
+}
+
+.input-txt{
+  size: 200px;
+}
+
+.sel-station {
+  size: 100px;
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+.sel-date {
+  margin-bottom: 30px;
+}
+
+.sel-time {
+  margin-bottom: 30px;
+}
+
+.sel-submit {
+  height: 80px;
+  width : 120px;
+  margin-left: 60px;
+  align-self: center;
+}
+
+.div-wrapper {
+  border: 1px solid #76c7e4;
+  width: 50%;
+  background-color: #daeff8;
+}
