@@ -113,10 +113,10 @@ const Station = (props) => {
                     <div {...getRootProps()}>
                         <label className = {classes.label} {...getInputLabelProps()}>
                         </label>
-                        <input onClick = { onSearch }  {...getInputProps()} />
+                        <input onClick = { onSearch }  {...getInputProps()} onSelectCapture = {props.setStation(value)}/>
                     </div >
                         {groupedOptions.length > 0 ? (
-                            <ul className = {classes.listbox} {...getListboxProps()}>
+                            <ul className = {classes.listbox} {...getListboxProps()} >
                                 {groupedOptions.map((option, index) => (
                                     <li {...getOptionProps({ option, index})} > { option } </li>
                                 ))}
