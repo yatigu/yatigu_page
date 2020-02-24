@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import axios from 'axios';
 import './Station.css';
 import Modal from './Modal';
-import useAutocomplete from '@material-ui/lab/useAutocomplete';
+// import useAutocomplete from '@material-ui/lab/useAutocomplete';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
@@ -38,7 +38,7 @@ const useStyles = makeStyles(theme => ({
 const Station = (props) => {
 
     
-    const [names, setNames] = useState([]); //기차역 전부다 때려박은거
+    // const [names, setNames] = useState([]); //기차역 전부다 때려박은거
     const [isModalOpen, toggleModal] = useState(false); 
     const [stationList, setStationList] = useState([[]]); // 초성별 기차역 배열
     const [initialList, setInitialList] = useState([]); //초성 리스트
@@ -49,7 +49,7 @@ const Station = (props) => {
 
         try {
             const response = await axios.get('http://15.165.170.3:8000/info/stations/');
-            const _initials = ['ㄱ','ㄴ','ㄷ','ㄹ','ㅁ','ㅅ','ㅇ','ㅈ','ㅊ','ㅋ','ㅌ','ㅍ','ㅎ'];
+            const _initials = ['ㄱ','ㄴ','ㄷ','ㄹ','ㅁ','ㅂ','ㅅ','ㅇ','ㅈ','ㅊ','ㅋ','ㅌ','ㅍ','ㅎ'];
  
             setStationList(response.data.stations);
             toggleModal(true);
@@ -62,44 +62,45 @@ const Station = (props) => {
 
     };
 
-
-    const onSearch = async () => {
-
-        try {
-            const response = await axios.get('http://15.165.170.3:8000/info/stations/');
-            var _names = [];
  
-            setStationList(response.data.stations);
+
+    // const onSearch = async () => {
+
+    //     try {
+    //         const response = await axios.get('http://15.165.170.3:8000/info/stations/');
+    //         var _names = [];
  
-            for(var i in stationList) {
-                for(var j in stationList[i]) {
-                    _names = _names.concat(stationList[i][j]);
-                }
-            }
+    //         setStationList(response.data.stations);
+ 
+    //         for(var i in stationList) {
+    //             for(var j in stationList[i]) {
+    //                 _names = _names.concat(stationList[i][j]);
+    //             }
+    //         }
 
-            setNames(_names);
+    //         setNames(_names);
 
-        } catch (e) {
-            console.log(e);
-        }
+    //     } catch (e) {
+    //         console.log(e);
+    //     }
 
-    };
+    // };
 
 
-    const classes = useStyles();
-    const {
-      getRootProps,
-      getInputLabelProps,
-      getInputProps,
-      getListboxProps,
-      getOptionProps,
-      groupedOptions,
-      value,
-    } = useAutocomplete({
-    //   id: 'use-autocomplete-demo',
-      options: names,
-      getOptionLabel: option => option,
-    });
+    // const classes = useStyles();
+    // const {
+    //   getRootProps,
+    //   getInputLabelProps,
+    //   getInputProps,
+    //   getListboxProps,
+    //   getOptionProps,
+    //   groupedOptions,
+    //   value,
+    // } = useAutocomplete({
+    // //   id: 'use-autocomplete-demo',
+    //   options: names,
+    //   getOptionLabel: option => option,
+    // });
     
     // const nameList = names.map((name,index) => <option key = { index } > { name } </option>);
     const ButtonList = initialList.map((ini,index) => <button className = "right-margin" key = { index } onClick = { () => { setInitial(index) } }> { ini } </button>  );
@@ -110,10 +111,11 @@ const Station = (props) => {
         <div>
             <div valgn="top" className = "sel-box">
                 <div>
-                    <div {...getRootProps()}>
+                    {/* <div {...getRootProps()}>
                         <label className = {classes.label} {...getInputLabelProps()}>
                         </label>
-                        <input onClick = { onSearch }  {...getInputProps()} onSelectCapture = {props.setStation(value)}/>
+                        <input onClick = { onSearch }  {...getInputProps()} onSelectCapture = {props.setStation(value)} value = {props.station}/>
+                        
                     </div >
                         {groupedOptions.length > 0 ? (
                             <ul className = {classes.listbox} {...getListboxProps()} >
@@ -121,7 +123,8 @@ const Station = (props) => {
                                     <li {...getOptionProps({ option, index})} > { option } </li>
                                 ))}
                             </ul>
-                        ): null}
+                        ): null} */}
+                        <input onClick = {onClick} value ={props.station}></input>
                 </div>
 
                 <button onClick = { onClick } > 검색 </button>
@@ -130,7 +133,7 @@ const Station = (props) => {
                         { ButtonList }
                     <div className = "top-margin">
                         {/* <select onChange={(e) => setStation(e.target.value)}>  */}
-                        <select onChange={(e) => props.setStation(e.target.value)}> 
+                        <select onChange={(e) => { props.setStation(e.target.value) }}> 
                             { selectList }
                         </select> 
                     </div>
