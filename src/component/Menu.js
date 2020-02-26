@@ -50,7 +50,6 @@ const Menu = () => {
     console.log("from:",from);
     console.log("to:",to);
     const [tdata,setData] = useState();
-    const [prevData,setPrevData] = useState();
 
     const classes = useStyles();
 
@@ -84,9 +83,7 @@ const Menu = () => {
             for(var i in tdata) {
                 rows = rows.concat(createData(tdata[i].구분, tdata[i].출발시간, tdata[i].열차번호, tdata[i].도착시간))
             }
-        
-            setPrevData(tdata);
-
+    
         } catch (e) {
             console.log(e);
         }
@@ -134,9 +131,9 @@ const Menu = () => {
                     <TableHead>
                     <TableRow>
                         <StyledTableCell>구분</StyledTableCell>
-                        <StyledTableCell align="right">도착시간</StyledTableCell>
-                        <StyledTableCell align="right">열차번호</StyledTableCell>
                         <StyledTableCell align="right">출발시간</StyledTableCell>
+                        <StyledTableCell align="right">열차번호</StyledTableCell>
+                        <StyledTableCell align="right">도착시간</StyledTableCell>
                     </TableRow>
                     </TableHead>
                     <TableBody>
