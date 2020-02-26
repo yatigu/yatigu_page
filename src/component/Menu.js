@@ -45,10 +45,11 @@ const Menu = () => {
   const [to, setTo] = useState();
   //   const [tdata, setData] = useState();
   const [rows, setRows] = useState([]);
+  const [tdate, setDate] = useState();
+  const [time, setTime] = useState();
   const classes = useStyles();
 
   const searchTickets = () => {
-    console.log('clicked');
     // let frd = new FormData();
 
     // frd.append('date', '20200202');
@@ -58,14 +59,15 @@ const Menu = () => {
 
     // console.log(frd) // body form-data를 넘길때 사용
     try {
+        console.log(tdate, time, from, to)
       axios
         .get('http://15.165.170.3:8000/info/tickets/', {
           headers: {'Content-Type': 'multipart/form-data'},
           params: {
-            date: '20200225',
-            hour: '160000',
-            start: '김천',
-            end: '부산',
+            date: tdate,
+            hour: time,
+            start: from,
+            end: to,
           },
         })
         .then(response => {
@@ -78,7 +80,7 @@ const Menu = () => {
                 data[i].구분,
                 data[i].출발시간,
                 data[i].열차번호,
-                data[i].도착시간
+                data[i].도착시간,
               )
             );
           }
@@ -110,13 +112,13 @@ const Menu = () => {
           <ul>
             <li className="li-wrapper">
               <label className="date-wrapper">출발일 </label>
-              <input className="menu-input-date" type="date" name="date" />
+              <input className="menu-input-date" type="date" name="date" onChange  = {(e) => {setDate(e.target.value.replace(/-/gi,''))}}/>
             </li>
           </ul>
           <ul>
             <li className="li-wrapper">
               <label className="time-wrapper">시간</label>
-              <input className="menu-input-time" type="time" name="time" />
+              <input className="menu-input-time" type="time" name="time" onChange  = {(e) => {setTime(e.target.value.replace(/:/gi,'').concat('00')) }}/>
             </li>
           </ul>
           <div>
