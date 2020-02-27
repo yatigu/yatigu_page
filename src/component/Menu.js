@@ -11,6 +11,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import Modal from './Modal';
 
 const StyledTableCell = withStyles(theme => ({
   head: {
@@ -48,6 +49,8 @@ const Menu = () => {
   const [tdate, setDate] = useState();
   const [time, setTime] = useState();
   const classes = useStyles();
+  const [ss,setSs] = useState(false);
+  const [isModalOpen, toggleModal] = useState(false); 
 
   const searchTickets = () => {
     // let frd = new FormData();
@@ -83,7 +86,9 @@ const Menu = () => {
                 data[i].도착시간,
               )
             );
+            setSs(true);
           }
+
           setRows(temp);
           return true;
         });
@@ -122,7 +127,13 @@ const Menu = () => {
             </li>
           </ul>
           <div>
-            <button onClick={searchTickets}>기차 검색하기</button>
+            <button onClick={searchTickets}>기차 검색하기</button> {ss && <button onClick = {()=>{toggleModal(true)}}>로그인 후 자동 예매</button>}
+            <Modal isOpen = { isModalOpen } toggle = { toggleModal } >
+                   <h1>로그인</h1>
+                   <label>id</label><input></input>
+                   <label>pw</label><input></input>
+                   <button>자동 예약 하기 버튼</button>
+            </Modal>
           </div>
         </fieldlist>
       </div>
@@ -139,7 +150,7 @@ const Menu = () => {
             </TableHead>
             <TableBody>
               {rows.map(row => (
-                <StyledTableRow key={row.name}>
+                <StyledTableRow key={row.index}>
                   <StyledTableCell component="th" scope="row">
                     {row.name}
                   </StyledTableCell>
