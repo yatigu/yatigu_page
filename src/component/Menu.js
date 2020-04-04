@@ -31,8 +31,8 @@ const StyledTableRow = withStyles(theme => ({
   },
 }))(TableRow);
 
-function createData(name, calories, fat, carbs) {
-  return {name, calories, fat, carbs};
+function createData(classification, stratPoint, trainNumber, endPoint) {
+  return {classification, stratPoint, trainNumber, endPoint};
 }
 
 const useStyles = makeStyles({
@@ -51,6 +51,8 @@ const Menu = () => {
   const classes = useStyles();
   const [ss,setSs] = useState(false);
   const [isModalOpen, toggleModal] = useState(false); 
+  const [select, setSelect] = useState(false);
+  const [ticket, setTicket] = useState();
 
   const searchTickets = () => {
     // let frd = new FormData();
@@ -62,15 +64,19 @@ const Menu = () => {
 
     // console.log(frd) // body form-data를 넘길때 사용
     try {
-        console.log(tdate, time, from, to)
+        setSs(false);
       axios
         .get('http://15.165.170.3:8000/info/tickets/', {
           headers: {'Content-Type': 'multipart/form-data'},
           params: {
-            date: tdate,
-            hour: time,
-            start: from,
-            end: to,
+            // date: tdate,
+            // hour: time,
+            // start: from,
+            // end: to,
+            date: '20200228',
+            hour: '160000',
+            start: '서울',
+            end: '부산',
           },
         })
         .then(response => {
@@ -86,10 +92,45 @@ const Menu = () => {
                 data[i].도착시간,
               )
             );
-            setSs(true);
           }
-
+          setSelect(false);
           setRows(temp);
+          return true;
+        });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const getTicket = () => {
+
+    let frd = new FormData();
+    frd.append('phone', '01012345678');
+    frd.append('pw','rhrnak2628!')
+    frd.append('source', '서울')
+    frd.append('destination','부산')
+    frd.append('index','1')
+    frd.append('year','2020')
+    frd.append('month','02')
+    frd.append('day','28')
+    try {
+      axios
+        .post('http://15.165.170.3:8000/account/user/',frd, {
+          headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        //   data: {
+        //     id : '01087841576',
+        //     pw : '1q2w3e4r!Q',
+        //     source : '서울',
+        //     destination : '부산',
+        //     index : '1',
+        //     year : '2020',
+        //     month : '02',
+        //     day : '28',
+        //   },
+        })
+        .then(response => {
+          //   setData(response.data.tickets);
+            console.log(response)
           return true;
         });
     } catch (e) {
@@ -99,72 +140,102 @@ const Menu = () => {
 
   return (
     <>
-      <div className="menu-wrapper">
+     
+    <div >
         <fieldlist className="station-wrapper">
-          <legend className="menu-title">승차권 예매하기</legend>
-          <ul className="menu-ul">
+        <legend className="menu-title">승차권 예매하기</legend>
+        <ul>
             <li className="li-wrapper">
-              <label className="menu-leg"> 출발역 </label>
-              <Station setStation={setFrom} station={from}></Station>
+            <label className="menu-leg"> 출발역 </label>
+            <Station setStation={setFrom} station={from}></Station>
             </li>
-          </ul>
-          <ul>
+        </ul>
+        <ul>
             <li className="li-wrapper">
-              <label className="menu-leg"> 도착역 </label>
-              <Station setStation={setTo} station={to}></Station>
+            <label className="menu-leg"> 도착역 </label>
+            <Station setStation={setTo} station={to}></Station>
             </li>
-          </ul>
-          <ul>
+        </ul>
+        <ul>
             <li className="li-wrapper">
-              <label className="date-wrapper">출발일 </label>
-              <input className="menu-input-date" type="date" name="date" onChange  = {(e) => {setDate(e.target.value.replace(/-/gi,''))}}/>
+            <label className="date-wrapper"> 출발일 </label>
+            <input className="menu-input-date" type="date" name="date" onChange  = {(e) => {setDate(e.target.value.replace(/-/gi,''));}}/>
             </li>
-          </ul>
-          <ul>
+        </ul>
+        <ul>
             <li className="li-wrapper">
-              <label className="time-wrapper">시간</label>
-              <input className="menu-input-time" type="time" name="time" onChange  = {(e) => {setTime(e.target.value.replace(/:/gi,'').concat('00')) }}/>
+            <label className="time-wrapper"> 시간 </label>
+            <input className="menu-input-time" type="time" name="time" onChange  = {(e) => {setTime(e.target.value.replace(/:/gi,'').concat('00')) }}/>
             </li>
-          </ul>
-          <div>
+        </ul>
+        <div>
             <button onClick={searchTickets}>기차 검색하기</button> {ss && <button onClick = {()=>{toggleModal(true)}}>로그인 후 자동 예매</button>}
             <Modal isOpen = { isModalOpen } toggle = { toggleModal } >
-                   <h1>로그인</h1>
-                   <label>id</label><input></input>
-                   <label>pw</label><input></input>
-                   <button>자동 예약 하기 버튼</button>
+                <h1>로그인</h1>
+                <label>id</label><input></input>
+                <label>pw</label><input></input>
+                <button onClick = {getTicket}>자동 예약 하기 버튼</button>
             </Modal>
-          </div>
+        </div>
         </fieldlist>
-      </div>
-      <div>
-        <TableContainer component={Paper}>
-          <Table className={classes.table} aria-label="customized table">
-            <TableHead>
-              <TableRow>
-                <StyledTableCell>구분</StyledTableCell>
-                <StyledTableCell align="right">출발시간</StyledTableCell>
-                <StyledTableCell align="right">열차번호</StyledTableCell>
-                <StyledTableCell align="right">도착시간</StyledTableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {rows.map(row => (
-                <StyledTableRow key={row.index}>
-                  <StyledTableCell component="th" scope="row">
-                    {row.name}
-                  </StyledTableCell>
-                  <StyledTableCell align="right">
-                    {row.calories}
-                  </StyledTableCell>
-                  <StyledTableCell align="right">{row.fat}</StyledTableCell>
-                  <StyledTableCell align="right">{row.carbs}</StyledTableCell>
-                </StyledTableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </div>
+        </div>
+        <div>
+            {select ? 
+                <TableContainer component={Paper}>
+                <Table className={classes.table} aria-label="customized table">
+                    <TableHead>
+                    <TableRow>
+                        <StyledTableCell>구분</StyledTableCell>
+                        <StyledTableCell align="right">출발시간</StyledTableCell>
+                        <StyledTableCell align="right">열차번호</StyledTableCell>
+                        <StyledTableCell align="right">도착시간</StyledTableCell>
+                    </TableRow>
+                    </TableHead>
+                    <TableBody>
+                    <StyledTableRow>
+                        <StyledTableCell component="th" scope="row">
+                            {ticket.classification}
+                        </StyledTableCell>
+                        <StyledTableCell align="right">
+                            {ticket.stratPoint}
+                        </StyledTableCell>
+                        <StyledTableCell align="right">{ticket.trainNumber}</StyledTableCell>
+                        <StyledTableCell align="right">{ticket.endPoint}</StyledTableCell>
+                        </StyledTableRow>
+
+                    </TableBody>
+                </Table>
+                </TableContainer>
+                :
+                <TableContainer component={Paper}>
+                <Table className={classes.table} aria-label="customized table">
+                    <TableHead>
+                    <TableRow>
+                        <StyledTableCell>구분</StyledTableCell>
+                        <StyledTableCell align="right">출발시간</StyledTableCell>
+                        <StyledTableCell align="right">열차번호</StyledTableCell>
+                        <StyledTableCell align="right">도착시간</StyledTableCell>
+                    </TableRow>
+                    </TableHead>
+                    <TableBody>
+                    {rows.map(row => (
+                        <StyledTableRow key={row.index} onClick = {()=>{setSelect(true); setTicket(row); setSs(true)}}>
+                        <StyledTableCell component="th" scope="row">
+                            {row.classification}
+                        </StyledTableCell>
+                        <StyledTableCell align="right">
+                            {row.stratPoint}
+                        </StyledTableCell>
+                        <StyledTableCell align="right">{row.trainNumber}</StyledTableCell>
+                        <StyledTableCell align="right">{row.endPoint}</StyledTableCell>
+                        </StyledTableRow>
+                    ))}
+                    </TableBody>
+                </Table>
+                </TableContainer>
+
+            }
+        </div>
     </>
   );
 };

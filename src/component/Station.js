@@ -56,21 +56,6 @@ const Station = (props) => {
 
     // };
 
-
-    // const classes = useStyles();
-    // const {
-    //   getRootProps,
-    //   getInputLabelProps,
-    //   getInputProps,
-    //   getListboxProps,
-    //   getOptionProps,
-    //   groupedOptions,
-    //   value,
-    // } = useAutocomplete({
-    // //   id: 'use-autocomplete-demo',
-    //   options: names,
-    //   getOptionLabel: option => option,
-    // });
     
     // const nameList = names.map((name,index) => <option key = { index } > { name } </option>);
     const ButtonList = initialList.map((ini,index) => <button className = "right-margin" key = { index } onClick = { () => { setInitial(index) } }> { ini } </button>  );
@@ -98,20 +83,20 @@ const Station = (props) => {
                 </div>
 
                 <button onClick = { onClick } > 검색 </button>
-                <Modal isOpen = { isModalOpen } toggle = { toggleModal } >
-                    <h1>기차역</h1>
-                        { ButtonList }
-                    <div className = "top-margin">
-                        {/* <select onChange={(e) => setStation(e.target.value)}>  */}
-                        <select onChange={(e) => { props.setStation(e.target.value) }} onClick ={(e) => { props.setStation(e.target.value) }}> 
-                            { selectList }
-                        </select> 
-                    </div>
-                    <div className = "top-margin">
-                        <button onClick={() => toggleModal(false)}>선택 완료</button>
-                    </div>
-                </Modal>
             </div>
+            <Modal isOpen = { isModalOpen } toggle = { toggleModal } >
+                <h1>기차역</h1>
+                    { ButtonList }
+                <div className = "top-margin">
+                    {/* <select onChange={(e) => setStation(e.target.value)}>  */}
+                    <select onChange={(e) => { props.setStation(e.target.value) }} onClick ={(e) => { props.setStation(e.target.value) }}> 
+                        { selectList }
+                    </select> 
+                </div>
+                <div className = "top-margin">
+                    <button onClick={() => toggleModal(false)}>선택 완료</button>
+                </div>
+            </Modal>
         </div>
     );
 };
