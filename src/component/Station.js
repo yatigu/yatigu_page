@@ -16,9 +16,9 @@ const Station = (props) => {
     // const [station, setStation] = useState();
 
     const onClick = async () => {
-
+        
         try {
-            const response = await axios.get('http://15.165.170.3:8000/info/stations/');
+            const response = await axios.get('ip/info/stations/');
             const _initials = ['ㄱ','ㄴ','ㄷ','ㄹ','ㅁ','ㅂ','ㅅ','ㅇ','ㅈ','ㅊ','ㅋ','ㅌ','ㅍ','ㅎ'];
  
             setStationList(response.data.stations);
@@ -37,7 +37,7 @@ const Station = (props) => {
     // const onSearch = async () => {
 
     //     try {
-    //         const response = await axios.get('http://15.165.170.3:8000/info/stations/');
+    //         const response = await axios.get('ip/info/stations/');
     //         var _names = [];
  
     //         setStationList(response.data.stations);

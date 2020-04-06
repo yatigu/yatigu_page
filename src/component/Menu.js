@@ -66,7 +66,7 @@ const Menu = () => {
     try {
         setSs(false);
       axios
-        .get('http://15.165.170.3:8000/info/tickets/', {
+        .get('ip/info/tickets/', {
           headers: {'Content-Type': 'multipart/form-data'},
           params: {
             // date: tdate,
@@ -115,7 +115,7 @@ const Menu = () => {
     frd.append('day','28')
     try {
       axios
-        .post('http://15.165.170.3:8000/account/user/',frd, {
+        .post('ip/account/user/',frd, {
           headers: {'Content-Type': 'application/x-www-form-urlencoded'},
         //   data: {
         //     id : '01087841576',
